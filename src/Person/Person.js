@@ -3,6 +3,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const person = (props) => {
+    // const random=Math.random();
+    // if(random>0.7){
+    //     throw new Error("errorororor");
+    // }
     const style= {
         // '@media (min-with:500px':{
         //     width:'450px'
