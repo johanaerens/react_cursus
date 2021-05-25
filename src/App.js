@@ -3,6 +3,20 @@ import Person from './Person/Person'
 import UserInput from './UserInput/UserInput'
 import UserOutput from './UserOutput/UserOutput'
 import {Component} from "react";
+import styled from 'styled-components'
+
+
+const StyledButton = styled.button`
+    background-color: ${props => props.alt ? 'red' : 'green'};
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    &:hover {
+        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+        color: black;
+    }
+`;
 
 class App extends Component {
     state = {
@@ -54,16 +68,17 @@ class App extends Component {
     }
 
     render() {
-        const style = {
-            backgroundColor: 'green',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen'
-            }
-        }
+        // const style = {
+        //     backgroundColor: 'green',
+        //     font: 'inherit',
+        //     border: '1px solid blue',
+        //     padding: '8px',
+        //     cursor: 'pointer',
+        //     ':hover': {
+        //         backgroundColor: 'lightgreen',
+        //         color:'black'
+        //     }
+        // }
 
         let div = null;
         if (this.state.showDiv) {
@@ -72,11 +87,11 @@ class App extends Component {
                     <p>qsdfqdsf</p>
                 </div>
             )
-            style.backgroundColor = 'red';
-            style[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            }
+            // style.backgroundColor = 'red';
+            // style[':hover'] = {
+            //     backgroundColor: 'salmon',
+            //     color: 'black'
+            // }
         }
 
         const stylingClasses = [];
@@ -88,55 +103,55 @@ class App extends Component {
         }
 
         return (
-                <div className="App">
-                    <h1>Hi, I'm a react app</h1>
-                    <p className={stylingClasses.join(' ')}>styling</p>
-                    <button
-                        style={style}
-                        onClick={this.switchNameHandler.bind(this, 'newName')}>
-                        switch name
-                    </button>
+            <div className="App">
+                <h1>Hi, I'm a react app</h1>
+                <p className={stylingClasses.join(' ')}>styling</p>
+                <StyledButton
+                    alt={this.state.showDiv}
+                    onClick={this.switchNameHandler.bind(this, 'newName')}>
+                    switch name
+                </StyledButton>
 
-                    {this.state.persons.map((person, index) => {
-                        return (
-                            <Person
-                                name={person.name}
-                                age={person.age}
-                                click={() => this.deletePersonHandler(index)}
-                                key={person.id}
-                                changed={(event) => this.nameChangedHandler(event, person.id)}
-                            />
-                        )
-                    })}
+                {this.state.persons.map((person, index) => {
+                    return (
+                        <Person
+                            name={person.name}
+                            age={person.age}
+                            click={() => this.deletePersonHandler(index)}
+                            key={person.id}
+                            changed={(event) => this.nameChangedHandler(event, person.id)}
+                        />
+                    )
+                })}
 
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[0].name}*/}
-                    {/*    age={this.state.persons[0].age}*/}
-                    {/*    click={() => this.switchNameHandler('newName1')}*/}
-                    {/*/>*/}
+                {/*<Person*/}
+                {/*    name={this.state.persons[0].name}*/}
+                {/*    age={this.state.persons[0].age}*/}
+                {/*    click={() => this.switchNameHandler('newName1')}*/}
+                {/*/>*/}
 
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[1].name}*/}
-                    {/*    age={this.state.persons[1].age}*/}
-                    {/*    click={this.switchNameHandler.bind(this, 'newName2')}*/}
-                    {/*    changed={this.nameChangedHandler}*/}
-                    {/*>*/}
-                    {/*    helloowkes*/}
-                    {/*</Person>*/}
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[2].name}*/}
-                    {/*    age={this.state.persons[2].age}*/}
-                    {/*    click={this.switchNameHandler.bind(this, 'newName3')} //bind is beter dan () =>*/}
-                    {/*/>*/}
+                {/*<Person*/}
+                {/*    name={this.state.persons[1].name}*/}
+                {/*    age={this.state.persons[1].age}*/}
+                {/*    click={this.switchNameHandler.bind(this, 'newName2')}*/}
+                {/*    changed={this.nameChangedHandler}*/}
+                {/*>*/}
+                {/*    helloowkes*/}
+                {/*</Person>*/}
+                {/*<Person*/}
+                {/*    name={this.state.persons[2].name}*/}
+                {/*    age={this.state.persons[2].age}*/}
+                {/*    click={this.switchNameHandler.bind(this, 'newName3')} //bind is beter dan () =>*/}
+                {/*/>*/}
 
-                    <UserInput handler={this.userNameChangedHandler} userName={this.state.userName}/>
-                    <UserOutput userName={this.state.userName}/>
+                <UserInput handler={this.userNameChangedHandler} userName={this.state.userName}/>
+                <UserOutput userName={this.state.userName}/>
 
-                    {div}
+                {div}
 
 
-                    <button onClick={this.toggleDiv}>showdiv</button>
-                </div>
+                <button onClick={this.toggleDiv}>showdiv</button>
+            </div>
         );
     }
 }
