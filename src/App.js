@@ -3,7 +3,6 @@ import Person from './Person/Person'
 import UserInput from './UserInput/UserInput'
 import UserOutput from './UserOutput/UserOutput'
 import {Component} from "react";
-import Radium, {StyleRoot} from "radium";
 
 class App extends Component {
     state = {
@@ -89,7 +88,6 @@ class App extends Component {
         }
 
         return (
-            <StyleRoot>
                 <div className="App">
                     <h1>Hi, I'm a react app</h1>
                     <p className={stylingClasses.join(' ')}>styling</p>
@@ -139,9 +137,8 @@ class App extends Component {
 
                     <button onClick={this.toggleDiv}>showdiv</button>
                 </div>
-            </StyleRoot>
         );
     }
 }
 
-export default Radium(App);
+export default App;
