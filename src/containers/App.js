@@ -1,23 +1,11 @@
 import './App.css';
-import Person from '../components/Persons/Person/Person'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 import UserInput from '../components/UserInput/UserInput'
 import UserOutput from '../components/UserOutput/UserOutput'
 import {Component} from "react";
 import styled from 'styled-components'
-import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 
-
-const StyledButton = styled.button`
-    background-color: ${props => props.alt ? 'red' : 'green'};
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-    &:hover {
-        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-        color: black;
-    }
-`;
 
 class App extends Component {
     state = {
@@ -95,63 +83,21 @@ class App extends Component {
             // }
         }
 
-        const stylingClasses = [];
-        if (this.state.persons.length <= 2) {
-            stylingClasses.push("red")
-        }
-        if (this.state.persons.length <= 1) {
-            stylingClasses.push("bold")
-        }
 
         return (
             <div className="App">
-                <h1>Hi, I'm a react app</h1>
-                <p className={stylingClasses.join(' ')}>styling</p>
-                <StyledButton
-                    alt={this.state.showDiv}
-                    onClick={this.switchNameHandler.bind(this, 'newName')}>
-                    switch name
-                </StyledButton>
-
-                {this.state.persons.map((person, index) => {
-                    return (
-                        <ErrorBoundary>
-                            <Person
-                                name={person.name}
-                                age={person.age}
-                                click={() => this.deletePersonHandler(index)}
-                                key={person.id}
-                                changed={(event) => this.nameChangedHandler(event, person.id)}
-                            />
-                        </ErrorBoundary>
-                    )
-                })}
-
-                {/*<Person*/}
-                {/*    name={this.state.persons[0].name}*/}
-                {/*    age={this.state.persons[0].age}*/}
-                {/*    click={() => this.switchNameHandler('newName1')}*/}
-                {/*/>*/}
-
-                {/*<Person*/}
-                {/*    name={this.state.persons[1].name}*/}
-                {/*    age={this.state.persons[1].age}*/}
-                {/*    click={this.switchNameHandler.bind(this, 'newName2')}*/}
-                {/*    changed={this.nameChangedHandler}*/}
-                {/*>*/}
-                {/*    helloowkes*/}
-                {/*</Person>*/}
-                {/*<Person*/}
-                {/*    name={this.state.persons[2].name}*/}
-                {/*    age={this.state.persons[2].age}*/}
-                {/*    click={this.switchNameHandler.bind(this, 'newName3')} //bind is beter dan () =>*/}
-                {/*/>*/}
+                <Cockpit persons={this.state.persons}
+                         clicked={this.switchNameHandler}
+                         showDiv={this.state.showDiv}/>
+                <Persons persons={this.state.persons}
+                         clicked={this.deletePersonHandler}
+                         changed={this.nameChangedHandler}
+                />
 
                 <UserInput handler={this.userNameChangedHandler} userName={this.state.userName}/>
                 <UserOutput userName={this.state.userName}/>
 
                 {div}
-
 
                 <button onClick={this.toggleDiv}>showdiv</button>
             </div>
