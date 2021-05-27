@@ -1,10 +1,10 @@
 import './App.css';
-import Person from './Person/Person'
-import UserInput from './UserInput/UserInput'
-import UserOutput from './UserOutput/UserOutput'
+import Person from '../components/Persons/Person/Person'
+import UserInput from '../components/UserInput/UserInput'
+import UserOutput from '../components/UserOutput/UserOutput'
 import {Component} from "react";
 import styled from 'styled-components'
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 
 
 const StyledButton = styled.button`
