@@ -4,7 +4,7 @@ import Cockpit from '../components/Cockpit/Cockpit'
 import UserInput from '../components/UserInput/UserInput'
 import UserOutput from '../components/UserOutput/UserOutput'
 import {Component} from "react";
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
 
 class App extends Component {
@@ -86,7 +86,8 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Cockpit persons={this.state.persons}
+                <Cockpit appTitle={this.props.appTitle}
+                         persons={this.state.persons}
                          clicked={this.switchNameHandler}
                          showDiv={this.state.showDiv}/>
                 <Persons persons={this.state.persons}

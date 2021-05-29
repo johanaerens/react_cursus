@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from "styled-components";
-import classes from "Cockpit.css";
 
 const cockpit = (props) => {
     const StyledButton = styled.button`
@@ -24,7 +23,7 @@ const cockpit = (props) => {
 
     return (
         <div>
-            <h1>Hi, I'm a react app</h1>
+            <h1>{props.appTitle}</h1>
             <p className={stylingClasses.join(' ')}>styling</p>
             <StyledButton
                 alt={props.showDiv}
