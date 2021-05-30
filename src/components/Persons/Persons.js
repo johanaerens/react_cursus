@@ -1,41 +1,54 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Person from "./Person/Person";
+// import classes from "./Persons.module.css";
+import withClass from "../../hoc/withClass"
 
-const persons = (props) =>
-    props.persons.map((person, index) => {
-            return (
-                <ErrorBoundary>
-                    <Person
-                        name={person.name}
-                        age={person.age}
-                        click={() => props.clicked(index)}
-                        key={person.id}
-                        changed={(event) => props.changed(event, person.id)}
-                    />
-                </ErrorBoundary>
-            )
-        }
-    );
+// PureComponent zal alle props controleren shouldComponentUpdate
+class Persons extends Component {
+    render() {
+        console.log("persons.js rendering")
+        return this.props.persons.map((person, index) => {
+                return (
+                    <ErrorBoundary>
+                        <Person
+                            name={person.name}
+                            age={person.age}
+                            click={() => this.props.clicked(index)}
+                            key={person.id}
+                            changed={(event) => this.props.changed(event, person.id)}
+                        />
+                    </ErrorBoundary>
+                )
+            }
+        );
+    }
 
-{/*<Person*/}
-{/*    name={this.state.persons[0].name}*/}
-{/*    age={this.state.persons[0].age}*/}
-{/*    click={() => this.switchNameHandler('newName1')}*/}
-{/*/>*/}
+    // componentWillUnmount() {
+    //     console.log("unmount clean up")
+    // }
 
-{/*<Person*/}
-{/*    name={this.state.persons[1].name}*/}
-{/*    age={this.state.persons[1].age}*/}
-{/*    click={this.switchNameHandler.bind(this, 'newName2')}*/}
-{/*    changed={this.nameChangedHandler}*/}
-{/*>*/}
-{/*    helloowkes*/}
-{/*</Person>*/}
-{/*<Person*/}
-{/*    name={this.state.persons[2].name}*/}
-{/*    age={this.state.persons[2].age}*/}
-{/*    click={this.switchNameHandler.bind(this, 'newName3')} //bind is beter dan () =>*/}
-{/*/>*/}
+    // static getDirivedStateFromProps(props, state) {
+    //     console.log("getDirivedStateFromProps")
+    //     return state;
+    // }
 
-export default persons;
+    //niet meer gebruiken ikv PureComponent
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     const shouldUpdate = nextProps.persons !== this.props.persons;
+    //     console.log("shouldComponentUpdate: " + shouldUpdate);
+    //     return shouldUpdate;
+    // }
+
+    // getSnapshotBeforeUpdate(prevProps, prevState) {
+    //     console.log("getSnapshotBeforeUpdate");
+    //     return {message: 'snapshot'};
+    // }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log("componentDidUpdate");
+    //     console.log(snapshot);
+    // }
+}
+
+export default withClass(Persons, "Persons");

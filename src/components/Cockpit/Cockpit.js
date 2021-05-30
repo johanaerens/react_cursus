@@ -1,7 +1,30 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from "styled-components";
 
-const cockpit = (props) => {
+const Cockpit = (props) => {
+    // useEffect(()=>{
+    //     console.log("useEffect");
+    //     setTimeout(()=> alert("test"),1000)
+    //     //htpp requests
+    // },[props.persons]); ==> wordt uitgevoerd als de persons worden aangepast
+
+    useEffect(() => {
+        console.log("useEffect");
+        const timer = setTimeout(() => alert("test"), 1000);
+        return () => {
+            clearTimeout(timer);
+            console.log("cleanup useeffect");
+        }
+        //htpp requests
+    }, []); //enkel eerste keer
+
+    useEffect(() => { //draait altijd en doet een cleanup
+        console.log("useEffect2");
+        return () => {
+            console.log("cleanup useeffect2")
+        }
+    })
+
     const StyledButton = styled.button`
     background-color: ${props => props.alt ? 'red' : 'green'};
     font: inherit;
@@ -14,10 +37,10 @@ const cockpit = (props) => {
     }
 `;
     const stylingClasses = [];
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         stylingClasses.push("red")
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         stylingClasses.push("bold")
     }
 
@@ -34,4 +57,4 @@ const cockpit = (props) => {
     );
 }
 
-export default cockpit;
+export default React.memo(Cockpit); //enkel als er wijzigingen zijn zal dit uitgevoerd worden

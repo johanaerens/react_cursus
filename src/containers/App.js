@@ -2,12 +2,37 @@ import './App.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
 import UserInput from '../components/UserInput/UserInput'
+import withClass from '../hoc/withClass'
 import UserOutput from '../components/UserOutput/UserOutput'
-import {Component} from "react";
+import {Component, Fragment} from "react";
+
 // import styled from 'styled-components'
 
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        console.log("constructor")
+    }
+
+    static getDirivedStateFromProps(props, state) {
+        console.log("getDirivedStateFromProps", props);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount");
+    }
+
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log("componentDidUpdate");
+    // }
+
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     return true;
+    // }
+
     state = {
         persons: [
             {id: '1', name: 'max1', age: 21},
@@ -15,7 +40,9 @@ class App extends Component {
             {id: '3', name: 'max3', age: 23}
         ],
         userName: 'supermax',
-        showDiv: false
+        showDiv: false,
+        showCockpit: true,
+        changeCounter: 0,
     }
     userNameChangedHandler = (event) => {
         this.setState({
@@ -40,7 +67,13 @@ class App extends Component {
         // const person = Object.assign({},this.state.persons[personIndex])//wordt eigenlijk niet gebruikt maar is een alternatief
         person.name = event.target.value;
         persons[personIndex] = person;
-        this.setState({persons: persons})
+        this.setState((prevState, props) => {
+                return {
+                    persons: persons,
+                    changeCounter: prevState.changeCounter++
+                }
+            }
+        )
     }
 
     deletePersonHandler = (personIndex) => {
@@ -57,6 +90,7 @@ class App extends Component {
     }
 
     render() {
+        console.log("render")
         // const style = {
         //     backgroundColor: 'green',
         //     font: 'inherit',
@@ -85,11 +119,15 @@ class App extends Component {
 
 
         return (
-            <div className="App">
-                <Cockpit appTitle={this.props.appTitle}
-                         persons={this.state.persons}
-                         clicked={this.switchNameHandler}
-                         showDiv={this.state.showDiv}/>
+            <Fragment>
+                {/*<WithClass classes="App">*/}
+                <button onClick={this.removeCockpit}>remove cockpit</button>
+                {this.state.showCockpit ? (< Cockpit appTitle={this.props.appTitle}
+                                                     persons={this.state.persons}
+                                                     personsLength={this.state.persons.length}
+                                                     clicked={this.switchNameHandler}
+                                                     showDiv={this.state.showDiv}/>
+                ) : null}
                 <Persons persons={this.state.persons}
                          clicked={this.deletePersonHandler}
                          changed={this.nameChangedHandler}
@@ -101,9 +139,15 @@ class App extends Component {
                 {div}
 
                 <button onClick={this.toggleDiv}>showdiv</button>
-            </div>
+
+                {/*</WithClass>*/}
+            </Fragment>
         );
+    }
+
+    removeCockpit = () => {
+        this.setState({showCockpit: false});
     }
 }
 
-export default App;
+export default withClass(App, "App");
