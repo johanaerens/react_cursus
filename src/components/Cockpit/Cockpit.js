@@ -1,7 +1,11 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef, useContext} from 'react'
 import styled from "styled-components";
+import AuthContext from '../../context/auth-context'
 
 const Cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+    const authContext = useContext(AuthContext)
+
     // useEffect(()=>{
     //     console.log("useEffect");
     //     setTimeout(()=> alert("test"),1000)
@@ -10,9 +14,10 @@ const Cockpit = (props) => {
 
     useEffect(() => {
         console.log("useEffect");
-        const timer = setTimeout(() => alert("test"), 1000);
+        // const timer = setTimeout(() => alert("test"), 1000);
+        toggleBtnRef.current.click();
         return () => {
-            clearTimeout(timer);
+            // clearTimeout(timer);
             console.log("cleanup useeffect");
         }
         //htpp requests
@@ -49,10 +54,15 @@ const Cockpit = (props) => {
             <h1>{props.appTitle}</h1>
             <p className={stylingClasses.join(' ')}>styling</p>
             <StyledButton
+                ref={toggleBtnRef}
                 alt={props.showDiv}
                 onClick={props.clicked.bind(this, 'newName')}>
                 switch name
             </StyledButton>
+            {/*<AuthContext.Consumer>*/}
+            {/*    {context => <button onClick={context.login}>Log in </button>}*/}
+            {/*</AuthContext.Consumer>*/}
+            <button onClick={authContext.login}>Log in </button>}
         </div>
     );
 }

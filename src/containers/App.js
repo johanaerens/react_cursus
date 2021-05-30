@@ -5,6 +5,7 @@ import UserInput from '../components/UserInput/UserInput'
 import withClass from '../hoc/withClass'
 import UserOutput from '../components/UserOutput/UserOutput'
 import {Component, Fragment} from "react";
+import AuthContext from "../context/auth-context"
 
 // import styled from 'styled-components'
 
@@ -43,6 +44,7 @@ class App extends Component {
         showDiv: false,
         showCockpit: true,
         changeCounter: 0,
+        authenticated: false,
     }
     userNameChangedHandler = (event) => {
         this.setState({
@@ -86,7 +88,11 @@ class App extends Component {
     toggleDiv = () => {
         this.setState({
             showDiv: !this.state.showDiv
-        })
+        });
+    }
+
+    loginHandler = () => {
+        this.setState({authenticated: true});
     }
 
     render() {
@@ -122,17 +128,21 @@ class App extends Component {
             <Fragment>
                 {/*<WithClass classes="App">*/}
                 <button onClick={this.removeCockpit}>remove cockpit</button>
-                {this.state.showCockpit ? (< Cockpit appTitle={this.props.appTitle}
-                                                     persons={this.state.persons}
-                                                     personsLength={this.state.persons.length}
-                                                     clicked={this.switchNameHandler}
-                                                     showDiv={this.state.showDiv}/>
-                ) : null}
-                <Persons persons={this.state.persons}
-                         clicked={this.deletePersonHandler}
-                         changed={this.nameChangedHandler}
-                />
-
+                <AuthContext.Provider value={{
+                    authenticated: this.state.authenticated,
+                    login: this.loginHandler
+                }}>
+                    {this.state.showCockpit ? (< Cockpit appTitle={this.props.appTitle}
+                                                         persons={this.state.persons}
+                                                         personsLength={this.state.persons.length}
+                                                         clicked={this.switchNameHandler}
+                                                         showDiv={this.state.showDiv}/>
+                    ) : null}
+                    <Persons persons={this.state.persons}
+                             clicked={this.deletePersonHandler}
+                             changed={this.nameChangedHandler}
+                    />
+                </AuthContext.Provider>
                 <UserInput handler={this.userNameChangedHandler} userName={this.state.userName}/>
                 <UserOutput userName={this.state.userName}/>
 
